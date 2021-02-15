@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-open class ReactiveApp {
+class ReactiveApp {
     companion object {
         @JvmStatic
         public fun main(args: Array<String>) {

@@ -6,25 +6,15 @@ logging:
           r2dbc: DEBUG
 
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        trace: true
   r2dbc:
-    url: r2dbc:h2:mem:///test
+    url: r2dbc:pool:mysql://127.0.0.1:3306/testdb
     name: sa
     password:
-  datasource:
-    database-platform: org.hibernate.dialect.H2Dialect
-    generate-ddl: true
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+  pool:
+    initial-size: 100
+    max-size: 500
+    max-idle-time: 30m
+    validation-query: SELECT 1
 
 webclientexample:
   #  postsapi:

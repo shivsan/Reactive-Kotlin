@@ -1,41 +1,34 @@
 package com.reactive.webapp.config
 
-import io.r2dbc.h2.H2ConnectionFactory
+import com.github.jasync.sql.db.mysql.pool.MySQLConnectionFactory
+import io.r2dbc.spi.ConnectionFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
-import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
 import org.springframework.core.io.ClassPathResource
-
-import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePopulator
-
-import org.springframework.data.r2dbc.connectionfactory.init.CompositeDatabasePopulator
-
-import org.springframework.data.r2dbc.connectionfactory.init.ConnectionFactoryInitializer
-
-import io.r2dbc.spi.ConnectionFactory
-
+import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration
 import org.springframework.data.r2dbc.connectionfactory.R2dbcTransactionManager
-
+import org.springframework.data.r2dbc.connectionfactory.init.CompositeDatabasePopulator
+import org.springframework.data.r2dbc.connectionfactory.init.ConnectionFactoryInitializer
+import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePopulator
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
 import org.springframework.transaction.ReactiveTransactionManager
 
 @Configuration
 @EnableR2dbcRepositories
 internal class R2DBCConfiguration : AbstractR2dbcConfiguration() {
 
-    @Bean
-    override fun connectionFactory(): ConnectionFactory? {
-        //ConnectionFactory factory = ConnectionFactories.get("r2dbc:h2:mem:///test?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+    fun connectionFactory() {
+        val url = "mysql://orders:orders@127.0.0.1:3306/orders"
+        return MySQLConnectionFactory(
+            MySQLConnectionConfiguration.builder()
+                .host("127.0.0.1")
+                .port(3306)
+                .username("root")
+                .password("123456")
+                .database("database_name")
+                .build()
+        )
 
-        //see: https://github.com/spring-projects/spring-data-r2dbc/issues/269
-//        return new H2ConnectionFactory(
-//                H2ConnectionConfiguration.builder()
-//                        //.inMemory("testdb")
-//                        .file("./testdb")
-//                        .username("user")
-//                        .password("password").build()
-//        );
-        return H2ConnectionFactory.inMemory("testdb")
     }
 
     @Bean

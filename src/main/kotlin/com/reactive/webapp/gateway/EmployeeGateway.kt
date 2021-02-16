@@ -12,7 +12,7 @@ class EmployeeGateway {
 
     suspend fun getEmployeeFromRpc(id: Int): Mono<Employee> {
         return client.get()
-            .uri("/employees/{id}", "1")
+            .uri("/employees/{id}", id)
             .retrieve()
             .bodyToMono(Employee::class.java)
     }
@@ -20,7 +20,7 @@ class EmployeeGateway {
     suspend fun getEmployeesFromRpc(): Flux<Employee> {
 
         return client.get()
-            .uri("/employees", "1")
+            .uri("/employees")
             .retrieve()
             .bodyToFlux(Employee::class.java)
     }

@@ -1,6 +1,7 @@
 package com.reactive.webapp.config
 
-import com.github.jasync.sql.db.mysql.pool.MySQLConnectionFactory
+import dev.miku.r2dbc.mysql.MySqlConnectionConfiguration
+import dev.miku.r2dbc.mysql.MySqlConnectionFactory
 import io.r2dbc.spi.ConnectionFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -16,19 +17,15 @@ import org.springframework.transaction.ReactiveTransactionManager
 @Configuration
 @EnableR2dbcRepositories
 internal class R2DBCConfiguration : AbstractR2dbcConfiguration() {
-
-    fun connectionFactory() {
-        val url = "mysql://orders:orders@127.0.0.1:3306/orders"
-        return MySQLConnectionFactory(
-            MySQLConnectionConfiguration.builder()
+    override fun connectionFactory(): ConnectionFactory {
+        return MySqlConnectionFactory.from(
+            MySqlConnectionConfiguration.builder()
                 .host("127.0.0.1")
                 .port(3306)
-                .username("root")
-                .password("123456")
-                .database("database_name")
+                .database("testdb")
+                .user("root")
                 .build()
         )
-
     }
 
     @Bean

@@ -7,16 +7,11 @@ logging:
 
 spring:
   r2dbc:
-    url: r2dbc:pool:mysql://127.0.0.1:3306/testdb
-    name: sa
+    url: r2dbc:pool:mysql://root:@127.0.0.1:3306/testdb
+    user: root
     password:
   pool:
     initial-size: 100
     max-size: 500
     max-idle-time: 30m
     validation-query: SELECT 1
-
-webclientexample:
-  #  postsapi:
-  #    host: https://localhost
-  h2-console-port: 8081

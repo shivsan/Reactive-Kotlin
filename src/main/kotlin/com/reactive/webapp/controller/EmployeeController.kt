@@ -12,13 +12,6 @@ import java.net.URI
 @RestController
 @RequestMapping("/employees")
 class EmployeeController(private val employeeService: EmployeeService) {
-    private val employees = listOf(Employee(1, "John"), Employee(2, "Jane"))
-
-    @GetMapping("/health-check")
-    public suspend fun healthCheck(): ResponseEntity<String> {
-        return ResponseEntity.ok("K Ok!")
-    }
-
     @GetMapping("/{id}")
     public suspend fun get(@PathVariable("id") id: Int): ResponseEntity<Employee> {
         val fetchedEmployee = employeeService.getById(id).awaitSingle()
